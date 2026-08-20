@@ -16,8 +16,8 @@ def add_user():
             last_name = input("Enter Last Name: ").strip().lower()
             email = input("Enter Email: ").strip().lower()
             phone = input("Enter Phone: ").strip()
-            role = input("Choose Employee Role: [manager] or [cashier]").strip().lower()
-            password = input("Enter Password").strip()
+            role = input("Choose Employee Role: [manager] or [cashier]: ").strip().lower()
+            password = input("Enter Password: ").strip()
 
             payload = {
                 "first_name": first_name,

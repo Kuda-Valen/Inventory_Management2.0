@@ -35,7 +35,7 @@ def hash_password(password: str) -> str:
    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-   return bcrypt.chechpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+   return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def create_access_token(data: dict, expires_delta: datetime.timedelta = None) -> str:
    to_encode = data.copy()
@@ -123,7 +123,7 @@ def employee_login(employee_credentials: EmployeeLogin, db: Session = Depends(ge
     return {
        "access_token": access_token,
        "token_type": "bearer",
-       "user_id": db_employee.employee_id,
+       "employee_id": db_employee.employee_id,
        "email": db_employee.email
     }
 
