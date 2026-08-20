@@ -1,5 +1,6 @@
 from interface.menus import manager_menu, cashier_menu
 from services.add_user import add_user
+from services.authenticate import login
 
 if __name__ == "__main__":
 
@@ -13,8 +14,7 @@ if __name__ == "__main__":
             option = int(input("\nChoose an Option: "))
 
             if option == 1:
-                # Authentication
-                ...
+                login()
             
             elif option == 2:
                 # Add User
