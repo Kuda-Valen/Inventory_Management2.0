@@ -1,0 +1,7 @@
+## Managers
+
+
+## Cashiers
+
+
+## Customers

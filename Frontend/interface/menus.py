@@ -1,4 +1,4 @@
-from services.add_product import add_product
+from services.products import view_products, add_product, add_stock, edit_product, remove_product
 
 def manager_menu():
     while True:
@@ -17,10 +17,11 @@ def manager_menu():
                 while True:
                     print("\n-- Products --\n")
                     print("1. Add Product")
-                    print("2. View Products")
-                    print("3. Edit Product")
-                    print("4. Remove Product")
-                    print("5. Return to Manager Menu")
+                    print("2. Add Stock")
+                    print("3. View Products")
+                    print("4. Edit Product")
+                    print("5. Remove Product")
+                    print("6. Return to Manager Menu")
 
                     try:
                         option = int(input("\nChoose an Option: "))
@@ -29,18 +30,18 @@ def manager_menu():
                             add_product()
 
                         elif option == 2:
-                            # View products
-                            ...
+                             add_stock()
 
                         elif option == 3:
-                            # Edit product
-                            ...
+                            view_products()
 
                         elif option == 4:
-                            # Remove Product
-                            ...
+                            edit_product()
 
                         elif option == 5:
+                            remove_product()
+
+                        elif option == 6:
                             print("Returning..")
                             break
 
@@ -151,8 +152,7 @@ def cashier_menu():
             option = int(input("\nChoose an Option: "))
 
             if option == 1:
-                # View Products
-                ...
+                view_products()
 
             elif option == 2:
                 # Start Transaction

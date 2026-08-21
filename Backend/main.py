@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import datetime
 import bcrypt
 import jwt
+from typing import List
 
 DATABASE_URL = "postgresql://postgres:Valentine@localhost:5433/Inventory_Management_db"
 
@@ -226,3 +227,8 @@ def add_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
    db.commit()
    db.refresh(db_customer)
    return db_customer
+
+@app.get("/products/", response_model=List[ProductResponse])
+def get_all_products(db: Session = Depends(get_db)):
+   products = db.query(Product.all())
+   return products
