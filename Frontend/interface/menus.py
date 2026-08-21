@@ -83,6 +83,7 @@ def cashier_menu():
 
             elif option == 4:
                 print("Returning to Main Menu")
+                break
 
             else:
                 print("[SYSTEM]     Invalid Option. Choose a Valid option..")
