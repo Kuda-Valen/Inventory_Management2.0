@@ -18,7 +18,7 @@ def login():
             data = response.json()
             token = data['access_token']
             print(f"\nLogin Successful!")
-            print(f"Logged in as: {data['email']} | role: '{data['role']}'")
+            print(f"Logged in as: {data['email']} | {data['role']}")
 
             return token
 

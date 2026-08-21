@@ -15,8 +15,8 @@ def create(first_name: str, last_name: str, email: str, phone: str, role: str, p
         "password": password
     }
     try:
-        response = requests.post(f"{API_URL}/employees/", json=payload)
-        if response.status_code == 200:
+        response = requests.post(f"{API_URL}/add_employee/", json=payload)
+        if response.status_code in (200, 201):
             data = response.json()
             typer.echo(f"Success: Employee Created with ID {data['employee_id']}")
 

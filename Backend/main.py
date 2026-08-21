@@ -24,7 +24,7 @@ class Employee(Base):
     last_name = Column(String(50), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     phone = Column(String(20), unique=True, nullable=False)
-    role = Column(String(100), unique=True, nullable=False)
+    role = Column(String(100), nullable=False)
     password = Column(String(255), nullable=False)
 
 Base.metadata.create_all(bind=engine)
@@ -61,6 +61,7 @@ class TokenResponse(BaseModel):
    token_type: str
    employee_id: int
    email: str
+   role: str
 
 class UserResponse(BaseModel):
    employee_id: int
@@ -124,7 +125,8 @@ def employee_login(employee_credentials: EmployeeLogin, db: Session = Depends(ge
        "access_token": access_token,
        "token_type": "bearer",
        "employee_id": db_employee.employee_id,
-       "email": db_employee.email
+       "email": db_employee.email,
+       "role": db_employee.role
     }
 
    
