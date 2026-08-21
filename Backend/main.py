@@ -230,5 +230,5 @@ def add_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
 
 @app.get("/products/", response_model=List[ProductResponse])
 def get_all_products(db: Session = Depends(get_db)):
-   products = db.query(Product.all())
+   products = db.query(Product).all()
    return products

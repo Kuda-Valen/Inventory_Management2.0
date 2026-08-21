@@ -43,15 +43,15 @@ def view_products():
                 print("No Products found in inventory.")
                 return
 
-            print(f"{'ID':<5} | {'Product Name':<20} | {'Price (R)':<10} | {'Stock':<8} | {'Reorder Level':<12}")
-            print("-" * 65)
+            print(f"{'ID':<5} | {'Product Name':<20} | {'Price (R)':<10} | {'Stock':<8} | {'Reorder Level':<12} |")
+            print("-" * 70)
             for item in products:
                 print(
                     f"{item['product_id']:<5} | "
                     f"{item['product_name']:<20} | "
                     f"{item['selling_price']:<10.2f} | "
                     f"{item['stock_quantity']:<8} | "
-                    f"{item['reorder_level']:<12}"
+                    f"{item['reorder_level']:<13} |"
                 )
 
         else:

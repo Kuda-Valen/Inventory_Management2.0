@@ -171,4 +171,8 @@ def cashier_menu():
 
         except ValueError as e:
             print(f"[SYSTEM]     Encountered input Error: {e}")
-        
+
+def inventory_cleck_menu():
+    #while True:
+    print("\n-- Inventory Cleck --\n")
+    print("Coming soon..")
