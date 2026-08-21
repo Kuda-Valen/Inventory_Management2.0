@@ -111,7 +111,7 @@ def employee_login(employee_credentials: EmployeeLogin, db: Session = Depends(ge
 
     if not db_employee or not verify_password(employee_credentials.password, db_employee.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Invalida email or password",
+                            detail="Invalid email or password",
                             headers={"WWW-Authenticate": "Bearer"},)
 
     token_data = {

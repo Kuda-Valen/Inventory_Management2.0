@@ -5,12 +5,13 @@ def manager_menu():
         print("\n-- Manager --\n")
         print("1. Add product")
         print("2. Add Staff")
-        print("3. View Profile")
-        print("4. Edit Product")
-        print("5. Remove Product")
-        print("6. View Products")
-        print("7. View Sales")
-        print("8. Return to Main Menu")
+        print("3. Make a Purchase")
+        print("4. View Profile")
+        print("5. Edit Product")
+        print("6. Remove Product")
+        print("7. View Products")
+        print("8. View Sales")
+        print("9. Return to Main Menu")
 
         try:
             option = int(input("\nChoose an Option: "))
@@ -22,27 +23,32 @@ def manager_menu():
             elif option == 2:
                 # Add Staff
                 ...
+
             elif option == 3:
-                # View Profile (either user/other users)
+                # Make a purchase
                 ...
 
             elif option == 4:
-                # Edit product
+                # View Profile (either user/other users)
                 ...
 
             elif option == 5:
-                # Remove product
+                # Edit product
                 ...
 
             elif option == 6:
-                # View Products
+                # Remove product
                 ...
 
             elif option == 7:
-                # View Sales
+                # View Products
                 ...
 
             elif option == 8:
+                # View Sales
+                ...
+
+            elif option == 9:
                 print("Returning to Main menu")
                 break
 

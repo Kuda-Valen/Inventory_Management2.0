@@ -14,7 +14,12 @@ if __name__ == "__main__":
             option = int(input("\nChoose an Option: "))
 
             if option == 1:
-                login()
+                data = login()
+                if data['role'] == "manager":
+                    manager_menu()
+                else:
+                    cashier_menu()
+
             
             elif option == 2:
                 # Add User

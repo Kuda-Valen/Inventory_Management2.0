@@ -20,7 +20,8 @@ def login():
             print(f"\nLogin Successful!")
             print(f"Logged in as: {data['email']} | {data['role']}")
 
-            return token
+            #return token, data
+            return data
 
         else:
             error_detail = response.json().get("detail", "Login failed")
