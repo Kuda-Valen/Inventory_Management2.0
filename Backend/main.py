@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, status
-from sqlalchemy import create_engine, Column, Integer, String, TIMESTAMP, text
+from sqlalchemy import create_engine, Column, Integer, String, Numeric, TIMESTAMP, text
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from pydantic import BaseModel
 import datetime
@@ -28,6 +28,31 @@ class Employee(Base):
     password = Column(String(255), nullable=False)
 
 Base.metadata.create_all(bind=engine)
+
+class Customer(Base):
+   __tablename__ = "Customers"
+
+   customer_id = Column(Integer, primary_key=True, index=True)
+   first_name = Column(String(50), nullable=False)
+   last_name = Column(String(50), nullable=False)
+   email = Column(String(100), unique=True, nullable=False)
+   phone = Column(String(20), unique=True, nullable=False)
+
+Base.metadata.create_all(bind=engine)
+
+class Product(Base):
+   __tablename__ = "Products"
+
+   product_id = Column(Integer, primary_key=True, index=True)
+   product_name = Column(String(100), unique=True, nullable=False)
+   description = Column(String(255), nullable=False)
+   cost_price = Column(Numeric(10, 2), nullable=False)
+   selling_price = Column(Numeric(10, 2), nullable=False)
+   stock_quantity = Column(Integer, default=0, nullable=False)
+   reorder_level = Column(Integer, default=5, nullable=False)
+
+Base.metadata.create_all(bind=engine)
+
 
 # Helper function
 def hash_password(password: str) -> str:
@@ -73,6 +98,39 @@ class UserResponse(BaseModel):
 
    class Config:
       from_attributes = True
+
+class ProductCreate(BaseModel):
+   product_name: str
+   description: str
+   cost_price: float
+   selling_price: float
+   stock_quantity: int
+   reorder_level: int
+
+class ProductResponse(BaseModel):
+   product_id: int
+   product_name: str
+   description: str
+   cost_price: float
+   selling_price: float
+   stock_quantity: int
+   reorder_level: int
+
+   class Config: 
+      from_attributes = True
+
+class CustomerCreate(BaseModel):
+   first_name: str
+   last_name: str
+   email: str
+   phone: str
+
+class CustomerResponse(BaseModel):
+   customer_id: int
+   first_name: str
+   last_name: str
+   email: str
+   phone: str
 
 def get_db():
     db = SessionLocal()
@@ -129,4 +187,42 @@ def employee_login(employee_credentials: EmployeeLogin, db: Session = Depends(ge
        "role": db_employee.role
     }
 
-   
+@app.post("/add_product/", response_model=ProductResponse)
+def add_product(product: ProductCreate, db: Session = Depends(get_db)):
+   existing_product = db.query(Product).filter(Product.product_name == product.product_name).first()
+
+   if existing_product:
+      raise HTTPException(status_code=400, detail="Product with this name already exists")
+
+   db_product = Product(
+      product_name=product.product_name,
+      description = product.description,
+      cost_price = product.cost_price,
+      selling_price = product.selling_price,
+      stock_quantity = product.stock_quantity,
+      reorder_level = product.reorder_level
+   )
+
+   db.add(db_product)
+   db.commit()
+   db.refresh(db_product)
+   return db_product
+
+@app.post("/add_customer/", response_model=CustomerResponse)
+def add_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
+   existing_customer = db.query(Customer).filter(Customer.email == customer.email).first()
+
+   if existing_customer:
+      raise HTTPException(status_code=400, detail="Email already registered")
+
+   db_customer = Customer(
+      first_name = customer.first_name,
+      last_name = customer.last_name,
+      email = customer.email,
+      phone = customer.phone
+   )
+
+   db.add(db_customer)
+   db.commit()
+   db.refresh(db_customer)
+   return db_customer

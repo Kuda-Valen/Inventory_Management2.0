@@ -3,7 +3,7 @@ import requests
 API_URL = "http://127.0.0.1:8000"
 
 def add_user():
-    print("\n-- Add New User --\n")
+    print("\n-- Add New Employee --\n")
     print("1. Add Employee")
     print("2. Add Customer")
     print("3. Return to Main Menu")
@@ -44,7 +44,27 @@ def add_user():
             first_name = input("\nEnter First Name: ")
             last_name = input("Enter Last Name: ")
             email = input("Enter Email: ")
-            phone = input("Enter phone")
+            phone = input("Enter phone: ")
+
+            payload = {
+                "first_name": first_name,
+                "last_name":  last_name,
+                "email" : email,
+                "phone" : phone
+            }
+
+            try:
+                response = requests.post(f"{API_URL}/add_customer/", json=payload)
+                if response.status_code == 200:
+                    data = response.json()
+                    print(f"\nCustomer Account Created succeessfully!")
+
+                else:
+                    error_detail = response.json().get("detail", "Add Customer Failed!")
+                    print(f"\nError ({response.status_code}): {error_detail}")
+
+            except requests.exceptions.ConnectionError:
+                print("\nError: Could not connect to backend Server. Make sure Uvicorn is running.")
 
         elif option == 3:
             print("Returning to Main Menu")

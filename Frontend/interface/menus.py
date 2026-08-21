@@ -1,4 +1,4 @@
-
+from services.add_product import add_product
 
 def manager_menu():
     while True:
@@ -17,8 +17,8 @@ def manager_menu():
             option = int(input("\nChoose an Option: "))
 
             if option == 1:
-                # Add product 
-                ...
+                add_product()
+
 
             elif option == 2:
                 # Add Staff
