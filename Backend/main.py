@@ -133,6 +133,9 @@ class CustomerResponse(BaseModel):
    email: str
    phone: str
 
+class StockUpdate(BaseModel):
+   quantity_to_add: int
+
 def get_db():
     db = SessionLocal()
     try:
@@ -232,3 +235,24 @@ def add_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
 def get_all_products(db: Session = Depends(get_db)):
    products = db.query(Product).all()
    return products
+
+@app.patch("/products/{product_id}/add_stock/", response_model=ProductResponse)
+def add_stock(product_id: int, stock_data: StockUpdate, db: Session = Depends(get_db)):
+   if stock_data.quantity_to_add <= 0:
+      raise HTTPException(
+         status_code=status.HTTP_400_Bad_REQUEST,
+         detail="Quantity to add must be greater than zero"
+      )
+
+   db_product = db.query(Product).filter(Product.product_id == product_id).first()
+   if not db_product:
+      raise HTTPException(
+         status_code=status.HTTP_404_NOT_FOUND,
+         detail=f"Product with ID {product_id} not found"
+      )
+
+   db_product.stock_quantity += stock_data.quantity_to_add
+
+   db.commit()
+   db.refresh(db_product)
+   return db_product

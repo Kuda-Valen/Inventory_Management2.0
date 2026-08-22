@@ -61,8 +61,30 @@ def view_products():
         print("\nError: Could not connect to backend server. Ensure Uvicorn is running.")
 
 def add_stock():
-    print("\nAdd Stock Coming soon..")
-    
+    print("\n-- Add Stock Coming soon --\n")
+    try:
+        product_id = int(input("Enter Product ID to restock: "))
+        quantity = int(input("Enter Quantity to Add: "))
+
+        payload = {"quantity_to_add": quantity}
+
+        response = requests.patch(
+            f"{API_URL}/products/{product_id}/add_stock/",
+            json=payload
+        )
+
+        if response.status_code == 200:
+            data = response.json()
+            print(f"\nSuccess! Added {quantity} units to '{data['product_name']}'.")
+            print(f"New Total stock: {data['stock_quantity']}")
+        else:
+            error_detail = response.json().get("detail", "Failed to update stock")
+            print(f"\nError ({response.status_code}): {error_detail}")
+
+    except ValueError:
+        print("\nInvalid input. Product ID and Quantity must be integers.")
+    except requests.exceptions.ConnectionError:
+        print(f"\nError: Could not connect to backend server. Make sure Uvicorn is running.")    
 
 def edit_product():
     print("\nEdit Product coming soon...")
