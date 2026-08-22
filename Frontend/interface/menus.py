@@ -19,9 +19,7 @@ def manager_menu():
                     print("1. Add Product")
                     print("2. Add Stock")
                     print("3. View Products")
-                    print("4. Edit Product")
-                    print("5. Remove Product")
-                    print("6. Return to Manager Menu")
+                    print("4. Return to Manager Menu")
 
                     try:
                         option = int(input("\nChoose an Option: "))
@@ -36,12 +34,6 @@ def manager_menu():
                             view_products()
 
                         elif option == 4:
-                            edit_product()
-
-                        elif option == 5:
-                            remove_product()
-
-                        elif option == 6:
                             print("Returning..")
                             break
 
